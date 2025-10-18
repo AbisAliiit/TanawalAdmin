@@ -1,0 +1,59 @@
+# Azure DevOps Pipeline for Tanawal Admin Portal
+# Deploy to Azure App Service
+
+trigger:
+- main
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '18.x'
+  azureServiceConnection: 'your-azure-service-connection'
+  webAppName: 'tanawal-admin-portal'
+  resourceGroupName: 'tanawal-rg'
+
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build Job'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: $(nodeVersion)
+    
+    - script: |
+        npm ci
+        npm run build
+      displayName: 'Install dependencies and build'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Build Artifacts'
+      inputs:
+        pathToPublish: '$(System.DefaultWorkingDirectory)/.next'
+        artifactName: 'build-artifacts'
+
+- stage: Deploy
+  displayName: 'Deploy Stage'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeployJob
+    displayName: 'Deploy Job'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure App Service'
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              appName: $(webAppName)
+              resourceGroupName: $(resourceGroupName)
+              package: '$(Pipeline.Workspace)/build-artifacts'
+              deploymentMethod: 'zipDeploy'
