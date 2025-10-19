@@ -7,8 +7,10 @@ import {
   LayoutDashboard, 
   Users, 
   ShoppingCart,
-  UtensilsCrossed
+  UtensilsCrossed,
+  X
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const navigation = [
   {
@@ -28,17 +30,30 @@ const navigation = [
   },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname()
 
   return (
     <div className="flex h-full w-64 flex-col bg-white border-r border-gray-200">
       {/* Logo */}
-      <div className="flex h-16 items-center px-6 border-b border-gray-200">
+      <div className="flex h-16 items-center justify-between px-6 border-b border-gray-200">
         <div className="flex items-center space-x-2">
           <UtensilsCrossed className="h-8 w-8 text-sky-600" />
           <span className="text-xl font-bold text-gray-900">Tanawal Admin</span>
         </div>
+        {/* Mobile close button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          onClick={onClose}
+        >
+          <X className="h-5 w-5" />
+        </Button>
       </div>
 
       {/* Navigation */}
@@ -49,6 +64,7 @@ export function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
+              onClick={onClose} // Close sidebar on mobile when navigating
               className={cn(
                 "group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
                 isActive

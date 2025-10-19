@@ -29,7 +29,7 @@ export function RevenueChart() {
         <CardTitle>Monthly Revenue</CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={250}>
           <LineChart data={revenueData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
@@ -50,7 +50,7 @@ export function OrdersChart() {
         <CardTitle>Daily Orders</CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={250}>
           <BarChart data={orderData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="day" />

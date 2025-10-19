@@ -202,24 +202,24 @@ export default function OrdersPage() {
       : 0
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Orders</h1>
-          <p className="text-gray-600">Track and manage all food orders</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Orders</h1>
+          <p className="text-sm sm:text-base text-gray-600">Track and manage all food orders</p>
         </div>
         <div className="flex items-center space-x-3">
-          <Button variant="outline">
+          <Button variant="outline" className="flex-1 sm:flex-none">
             <Filter className="h-4 w-4 mr-2" />
-            Filter
+            <span className="hidden sm:inline">Filter</span>
           </Button>
-          <Button>Export Orders</Button>
+          <Button className="flex-1 sm:flex-none">Export Orders</Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-600">Total Orders</CardTitle>
@@ -272,17 +272,17 @@ export default function OrdersPage() {
       {/* Orders Table */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <CardTitle>All Orders</CardTitle>
             <div className="flex items-center space-x-2">
-              <div className="relative">
+              <div className="relative flex-1 sm:flex-none">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   type="text"
                   placeholder="Search by ID, food, method, status…"
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent w-full sm:w-64"
                 />
               </div>
             </div>
@@ -298,69 +298,72 @@ export default function OrdersPage() {
           ) : error ? (
             <div className="text-red-600">Error: {error}</div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Food</TableHead>
-                  <TableHead>Customized</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Purchase Date</TableHead>
-                  <TableHead>Payment</TableHead>
-               
-                  <TableHead className="w-[50px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filtered.map((r) => (
-                  <TableRow key={r.id}>
-                    <TableCell>
-                      <div className="font-medium text-gray-900">#{r.id}</div>
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-900">
-                      <div className="font-medium">{r.foodName}</div>
-                      <div className="text-xs text-gray-500">FoodID: {r.foodId}</div>
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {r.isCustomized ? "Yes" : "No"}
-                    </TableCell>
-                    <TableCell className="text-sm font-medium text-gray-900">
-                      {fmtMoney(r.finalPrice)}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={getStatusColor(r.status)}>
-                        {r.status.replace("_", " ")}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {fmtDateTime(r.purchaseDate)}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {r.paymentMethod}
-                    </TableCell>
-                  
-                    <TableCell>
-                      <div className="flex items-center space-x-1">
-                        <Button variant="ghost" size="icon" title="View">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" title="More">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {filtered.length === 0 && (
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center text-sm text-gray-500 py-8">
-                      No orders found.
-                    </TableCell>
+                    <TableHead className="min-w-[100px]">Order ID</TableHead>
+                    <TableHead className="min-w-[150px]">Food</TableHead>
+                    <TableHead className="min-w-[100px] hidden sm:table-cell">Customized</TableHead>
+                    <TableHead className="min-w-[100px]">Total</TableHead>
+                    <TableHead className="min-w-[100px]">Status</TableHead>
+                    <TableHead className="min-w-[140px] hidden lg:table-cell">Purchase Date</TableHead>
+                    <TableHead className="min-w-[100px] hidden md:table-cell">Payment</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filtered.map((r) => (
+                    <TableRow key={r.id}>
+                      <TableCell>
+                        <div className="font-medium text-gray-900">#{r.id}</div>
+                      </TableCell>
+                      <TableCell className="text-sm text-gray-900">
+                        <div className="font-medium">{r.foodName}</div>
+                        <div className="text-xs text-gray-500">FoodID: {r.foodId}</div>
+                        <div className="text-xs text-gray-500 sm:hidden">
+                          {r.isCustomized ? "Customized" : "Standard"}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm text-gray-600 hidden sm:table-cell">
+                        {r.isCustomized ? "Yes" : "No"}
+                      </TableCell>
+                      <TableCell className="text-sm font-medium text-gray-900">
+                        {fmtMoney(r.finalPrice)}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={getStatusColor(r.status)}>
+                          {r.status.replace("_", " ")}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-gray-600 hidden lg:table-cell">
+                        {fmtDateTime(r.purchaseDate)}
+                      </TableCell>
+                      <TableCell className="text-sm text-gray-600 hidden md:table-cell">
+                        {r.paymentMethod}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-1">
+                          <Button variant="ghost" size="icon" title="View">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" title="More">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {filtered.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={9} className="text-center text-sm text-gray-500 py-8">
+                        No orders found.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>
