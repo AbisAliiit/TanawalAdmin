@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:azure": "next build && next export",
     "docker:build": "docker build -t tanawal-admin .",
     "docker:run": "docker run -p 3000:3000 tanawal-admin",
     "analyze": "ANALYZE=true npm run build"
