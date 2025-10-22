@@ -81,6 +81,6 @@ export const FoodEndpoint = {
     ADDFOOD: `${FoodUrl}/AddFoodList`,
     DELETEFOOD: `${FoodUrl}/DeleteFoodList`,
     UPDATEFOOD: `${FoodUrl}/UpdateFoodList`,
-    GETFOOD: `${FoodUrl}/GetFoodList`,
+    GETFOOD: `${FoodUrl}/GetFoodList?admin=true`,
   },
 };

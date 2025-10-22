@@ -4,7 +4,7 @@ import { Configuration, PopupRequest } from "@azure/msal-browser";
 const isProd = typeof window !== "undefined" &&
   window.location.origin.includes("azurestaticapps.net");
 
-const redirectUri = "https://white-wave-0c4e4e61e.3.azurestaticapps.net/"
+const redirectUri =isProd? "https://white-wave-0c4e4e61e.3.azurestaticapps.net/":"http://localhost:3000/";
   
 export const msalConfig: Configuration = {
   auth: {
