@@ -28,6 +28,9 @@ const AppConfigs: Record<APP_NAMES, TAppConfig> = {
   [APP_NAMES.USER]: {
     PREFIX: "FoodUserManagement",
   },
+  [APP_NAMES.FOOD]: {
+    PREFIX: "food-management",
+  },
   [APP_NAMES.PURCHASE]: {
     PREFIX: "food-purchase-management",
   },
@@ -46,9 +49,11 @@ const createUrl = (appConfig: TAppConfig): string => {
 };
 
 const AuthAppConfig = getAppConfig(APP_NAMES.USER);
+const FoodApp = getAppConfig(APP_NAMES.FOOD);
 const PurchaseApp = getAppConfig(APP_NAMES.PURCHASE);
 
 const AuthUrl = createUrl(AuthAppConfig);
+const FoodUrl = createUrl(FoodApp);
 const PurchaseUrl = createUrl(PurchaseApp);
 
 export const BaseUrl = `${SERVER_URL}`;
@@ -68,5 +73,14 @@ export const AdminEndpoint = {
     UPDATE_ORDER: `${PurchaseUrl}/UpdateOrder`,
     DELETE_ORDER: `${PurchaseUrl}/DeleteOrder`,
     GET_ORDER_BY_ID: `${PurchaseUrl}/GetOrderById`,
+  },
+};
+
+export const FoodEndpoint = {
+  FOOD: {
+    ADDFOOD: `${FoodUrl}/AddFoodList`,
+    DELETEFOOD: `${FoodUrl}/DeleteFoodList`,
+    UPDATEFOOD: `${FoodUrl}/UpdateFoodList`,
+    GETFOOD: `${FoodUrl}/GetFoodList`,
   },
 };

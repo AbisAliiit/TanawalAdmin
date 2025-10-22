@@ -8,6 +8,7 @@ import {
   Users, 
   ShoppingCart,
   UtensilsCrossed,
+  ChefHat,
   X
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -22,6 +23,11 @@ const navigation = [
     name: "Users",
     href: "/users",
     icon: Users,
+  },
+  {
+    name: "Food Items",
+    href: "/foods",
+    icon: ChefHat,
   },
   {
     name: "Orders",
