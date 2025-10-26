@@ -34,6 +34,9 @@ const AppConfigs: Record<APP_NAMES, TAppConfig> = {
   [APP_NAMES.PURCHASE]: {
     PREFIX: "food-purchase-management",
   },
+  [APP_NAMES.DELIVERY]: {
+    PREFIX: "uber-direct",
+  },
 };
 
 const getAppConfig = (appName: APP_NAMES): TAppConfig => {
@@ -51,10 +54,12 @@ const createUrl = (appConfig: TAppConfig): string => {
 const AuthAppConfig = getAppConfig(APP_NAMES.USER);
 const FoodApp = getAppConfig(APP_NAMES.FOOD);
 const PurchaseApp = getAppConfig(APP_NAMES.PURCHASE);
+const DeliveryApp = getAppConfig(APP_NAMES.DELIVERY);
 
 const AuthUrl = createUrl(AuthAppConfig);
 const FoodUrl = createUrl(FoodApp);
 const PurchaseUrl = createUrl(PurchaseApp);
+const DeliveryUrl = createUrl(DeliveryApp);
 
 export const BaseUrl = `${SERVER_URL}`;
 
@@ -73,6 +78,9 @@ export const AdminEndpoint = {
     UPDATE_ORDER: `${PurchaseUrl}/UpdateOrder`,
     DELETE_ORDER: `${PurchaseUrl}/DeleteOrder`,
     GET_ORDER_BY_ID: `${PurchaseUrl}/GetOrderById`,
+  },
+  DELIVERY: {
+    GET_DELIVERIES: `${DeliveryUrl}/deliveries`,
   },
 };
 
